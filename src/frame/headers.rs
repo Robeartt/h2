@@ -767,7 +767,9 @@ impl HeadersFlag {
         self.0 & PRIORITY == PRIORITY
     }
 
-    pub fn set_priority(&mut self) { self.0 |= PRIORITY }
+    pub fn set_priority(&mut self) {
+        self.0 |= PRIORITY
+    }
 }
 
 impl Default for HeadersFlag {
