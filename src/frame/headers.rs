@@ -116,7 +116,7 @@ impl Headers {
 
         Headers {
             stream_id,
-            stream_dep: Some(StreamDependency::new(StreamId::zero(), 255, true)),,
+            stream_dep: Some(StreamDependency::new(StreamId::zero(), 255, true)),
             header_block: HeaderBlock {
                 fields,
                 is_over_size: false,
