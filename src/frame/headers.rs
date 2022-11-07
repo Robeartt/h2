@@ -1025,7 +1025,7 @@ mod test {
         let continuation = headers
             .encode(&mut encoder, &mut (&mut dst).limit(frame::HEADER_LEN + 8))
             .unwrap();
-        
+
         assert_eq!(17, dst.len());
         assert_eq!([0, 0, 8, 1, 32, 0, 0, 0, 0], &dst[0..9]);
         assert_eq!(&[0x40, 0x80 | 4], &dst[9..11]);
