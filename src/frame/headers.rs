@@ -116,7 +116,7 @@ impl Headers {
 
         Headers {
             stream_id,
-            stream_dep: None, // Is this needed? Some(StreamDependency::new(StreamId::zero(), 255, true)),
+            stream_dep: Some(StreamDependency::new(StreamId::zero(), 255, true)),
             header_block: HeaderBlock {
                 fields,
                 is_over_size: false,
@@ -133,7 +133,7 @@ impl Headers {
 
         Headers {
             stream_id,
-            stream_dep: None, //Is this needed? Some(StreamDependency::new(StreamId::zero(), 255, true)),
+            stream_dep: Some(StreamDependency::new(StreamId::zero(), 255, true)),
             header_block: HeaderBlock {
                 fields,
                 is_over_size: false,
@@ -988,7 +988,7 @@ fn decoded_header_size(name: usize, value: usize) -> usize {
     name + value + 32
 }
 
-#[cfg(test)]
+/*#[cfg(test)]
 mod test {
     use std::iter::FromIterator;
 
@@ -1057,4 +1057,4 @@ mod test {
         let mut buf = BytesMut::new();
         huffman::decode(src, &mut buf).unwrap()
     }
-}
+}*/
