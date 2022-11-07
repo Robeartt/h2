@@ -785,6 +785,34 @@ impl Builder {
         self
     }
 
+    /// Sets the max size of received header table.
+    ///
+    /// This advisory setting informs a peer of the maximum size of header table
+    /// that the sender is prepared to accept, in octets. The value is based on
+    /// the uncompressed size of header table, including the length of the name
+    /// and value in octets plus an overhead of 32 octets for each header field.
+    ///
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use tokio::io::{AsyncRead, AsyncWrite};
+    /// # use h2::client::*;
+    /// # use bytes::Bytes;
+    /// #
+    /// # async fn doc<T: AsyncRead + AsyncWrite + Unpin>(my_io: T)
+    /// # -> Result<((SendRequest<Bytes>, Connection<T, Bytes>)), h2::Error>
+    /// # {
+    /// // `client_fut` is a future representing the completion of the HTTP/2
+    /// // handshake.
+    /// let client_fut = Builder::new()
+    ///     .max_header_table_size(64 * 1024)
+    ///     .handshake(my_io);
+    /// # client_fut.await
+    /// # }
+    /// #
+    /// # pub fn main() {}
+    /// ```
     pub fn max_header_table_size(&mut self, max: u32) -> &mut Self {
         self.settings.set_header_table_size(Some(max));
         self
