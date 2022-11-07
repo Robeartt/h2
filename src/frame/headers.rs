@@ -116,7 +116,7 @@ impl Headers {
 
         Headers {
             stream_id,
-            stream_dep: Some(StreamDependency::new(StreamId::zero(), 255, true)),
+            stream_dep: None, // Is this needed? Some(StreamDependency::new(StreamId::zero(), 255, true)),
             header_block: HeaderBlock {
                 fields,
                 is_over_size: false,
@@ -133,7 +133,7 @@ impl Headers {
 
         Headers {
             stream_id,
-            stream_dep: Some(StreamDependency::new(StreamId::zero(), 255, true)),
+            stream_dep: None, //Is this needed? Some(StreamDependency::new(StreamId::zero(), 255, true)),
             header_block: HeaderBlock {
                 fields,
                 is_over_size: false,
@@ -703,12 +703,12 @@ impl Iterator for Iter {
                 return Some(Method(method));
             }
 
-            if let Some(scheme) = pseudo.scheme.take() {
-                return Some(Scheme(scheme));
-            }
-
             if let Some(authority) = pseudo.authority.take() {
                 return Some(Authority(authority));
+            }
+
+            if let Some(scheme) = pseudo.scheme.take() {
+                return Some(Scheme(scheme));
             }
 
             if let Some(path) = pseudo.path.take() {
@@ -1025,9 +1025,9 @@ mod test {
         let continuation = headers
             .encode(&mut encoder, &mut (&mut dst).limit(frame::HEADER_LEN + 8))
             .unwrap();
-
+        
         assert_eq!(17, dst.len());
-        assert_eq!([0, 0, 8, 1, 0, 0, 0, 0, 0], &dst[0..9]);
+        assert_eq!([0, 0, 8, 1, 32, 0, 0, 0, 0], &dst[0..9]);
         assert_eq!(&[0x40, 0x80 | 4], &dst[9..11]);
         assert_eq!("hello", huff_decode(&dst[11..15]));
         assert_eq!(0x80 | 4, dst[15]);
